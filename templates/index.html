@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block main %}
+
+<nav class="navbar navbar-expand-lg bg-body-tertiary" data-bs-theme="dark">
+    <div class="container-fluid">
+        <div class="navbar-brand d-flex justify-content-center">
+            <a href="/">
+                <img src="{{ url_for('static', filename='icons/favicon.ico') }}" alt="LEXER" width="45" height="45" class="mx-auto">
+            </a>
+        </div>
+    </div>
+</nav>
+
+<h1>Lexical Analyzer</h1>
+
+{% endblock %}
