@@ -2,32 +2,6 @@
 
 {% block main %}
 
-<!-- NAVBAR STARTED -->
-<nav class="navbar navbar-dark navbar-expand-md bg-dark py-3 mb-xxl-0 pb-xxl-1">
-    <div class="container">
-        <a class="navbar-brand d-flex align-items-center me-xxl-5 mb-xxl-4 pe-xxl-0" href="/" style="padding-top: 0px;padding-right: 12px;margin-left: 0px;padding-bottom: 0px;margin-bottom: 7px;margin-right: 8px;">
-            
-            <img class="bounce animated pb-sm-0" src="{{ url_for('static', filename='img/logo.png')}}" width="45" height="45" loading="eager"></a>
-            
-            <button data-bs-toggle="collapse" class="navbar-toggler" data-bs-target="#navcol-6">
-                <span class="visually-hidden">Toggle navigation</span>
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-
-        <div class="collapse navbar-collapse flex-grow-0 order-md-first" id="navcol-6">
-            <ul class="navbar-nav me-auto">
-                <li class="nav-item"><a class="nav-link active" href="/">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#">Team</a></li>
-            </ul>
-            <div class="d-md-none my-2"></div>
-        </div>
-        <div class="d-none d-md-block"><a class="btn btn-light me-2" role="button" href="#">Launch</a></div>
-    </div>
-</nav>
-
-<!-- NAVBAR ENDED -->
-
 <!-- HERO SECTION STARTED -->
 
 <section class="py-4 py-xl-5">
@@ -80,31 +54,5 @@
 </section>
 
 <!-- HERO SECTION ENDED -->
-
-<!-- FOOTER STARTED -->
-
-<footer class="text-center py-4">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-lg-3">
-            <div class="col">
-                <p class="text-muted my-2">Copyright&nbsp;© 2023 Lexer</p>
-            </div>
-            <div class="col">
-                <a href="/">
-            <img src="{{ url_for('static', filename='img/L.png')}}" width="45" height="45">
-        </a> 
-            </div>
-            <div class="col">
-                <ul class="list-inline my-2">
-                    <li class="list-inline-item"><a class="link-secondary" href="#">Privacy Policy</a></li>
-                    <li class="list-inline-item"><a class="link-secondary" href="#">Terms of Use</a></li>
-                </ul>
-            </div>
-        </div>
-    </div>
-</footer>
-
-<!-- FOOTER ENDED -->
-
 
 {% endblock %}
