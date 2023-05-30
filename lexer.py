@@ -12,6 +12,9 @@ def index():
 def team():
     return render_template('team.html')
 
+@app.route('/lexer')
+def lexer():
+    return render_template('lexer.html')
 
 if __name__ == '__main__':
     app.run()
