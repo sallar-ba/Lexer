@@ -4,7 +4,13 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-    <title>Lexer</title>
+    <title>Lexer - 
+
+        {% block title%}
+
+        {%endblock%}
+
+    </title>
     <link rel="stylesheet" href="{{url_for('static', filename='bootstrap/css/bootstrap.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/animate.min.css')}}">
     <link rel="stylesheet" href="{{url_for('static', filename='css/Team-Horizontal-images.css')}}">
@@ -54,7 +60,7 @@
                 <p class="text-muted my-2">Copyright&nbsp;© 2023 Lexer</p>
             </div>
             <div class="col">
-                <a href="/">
+                <a href="#">
             <img src="{{ url_for('static', filename='img/L.png')}}" width="45" height="45">
         </a> 
             </div>
