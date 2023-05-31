@@ -16,5 +16,10 @@ def team():
 def lexer():
     return render_template('lexer.html')
 
+
+@app.route('/tree')
+def tree():
+    return render_template('tree.html')
+
 if __name__ == '__main__':
     app.run()
