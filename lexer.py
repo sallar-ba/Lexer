@@ -17,10 +17,10 @@ def team():
 @app.route('/lexer', methods=['GET', 'POST'])
 def lexer():
     form = CodeForm()
-    if form.validate_on_submit():
-        code = form.Code.data
+    #if form.validate_on_submit():
+        #code = form.Code.data
         # Function Call For Lexical and Syntax Analyzer
-
+     
     return render_template('lexer.html', form=form)
 
 
