@@ -7,14 +7,7 @@ A Lexical Analyzer, Syntax Analyzer Using Python (Flask)
 To deploy this project run (for devs only)
 
 ```bash
-  pip install flask
-```
-
-```bash
-  set FLASK_APP=lexer.py
-```
-```bash
-  set FLASK_DEBUG=1
+  set FLASK_APP=run.py
 ```
 ```bash
   flask run
