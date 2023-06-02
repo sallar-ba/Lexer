@@ -1,8 +1,6 @@
-from flask import Flask, render_template
-from forms import CodeForm, TreeForm
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '9f5ac35a1742f4f096316546'
+from lexer import app
+from flask import render_template
+from .forms import CodeForm, TreeForm
 
 @app.route('/')
 @app.route('/index')
@@ -32,6 +30,3 @@ def tree():
         # Function Call For Lexical and Syntax Analyzer
         
     return render_template('tree.html', form=form)
-
-if __name__ == '__main__':
-    app.run()
