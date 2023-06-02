@@ -18,7 +18,15 @@
         </div>
     </div>
     <div class="row justify-content-center align-items-center align-self-center">
-        <div class="col-md-12 text-center justify-content-center align-items-center align-content-center align-self-center"><input type="text" style="margin-top: -1px;width: 456.8px;height: 48px;" placeholder="Expression..."></div>
+        <form method="POST" action="{{ url_for('tree') }}">
+            {{ form.hidden_tag() }}
+            <div class="col-md-12 text-center justify-content-center align-items-center align-content-center align-self-center">
+                {{ form.expression(class_="form-control", style="margin-left: 420px; margin-top: -1px;width: 456.8px;height: 48px;") }}
+            </div>
+            <div class="col" style="margin-bottom: 97px; text-align: center; padding-bottom: 42px;padding-top: 20px;margin-top: -3px;">
+                {{ form.submit(class_="btn btn-primary", style="padding-top: 0px;width: 100.05px;height: 41px;") }}
+            </div>
+        </form>
     </div>
 </div>
 <div class="container">

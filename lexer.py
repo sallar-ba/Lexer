@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from forms import CodeForm
+from forms import CodeForm, TreeForm
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '9f5ac35a1742f4f096316546'
@@ -24,9 +24,14 @@ def lexer():
     return render_template('lexer.html', form=form)
 
 
-@app.route('/tree')
+@app.route('/tree', methods=['GET', 'POST'])
 def tree():
-    return render_template('tree.html')
+    form = TreeForm()
+    #if form.validate_on_submit():
+        #code = form.Code.data
+        # Function Call For Lexical and Syntax Analyzer
+        
+    return render_template('tree.html', form=form)
 
 if __name__ == '__main__':
     app.run()
