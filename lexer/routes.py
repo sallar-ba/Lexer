@@ -19,9 +19,10 @@ def lexer():
     if form.validate_on_submit():
         code = form.code.data
         tokens = tokenize_cpp_code(code)
-        return render_template('lexer.html', form=form, tokens=tokens)
+        return render_template('output_lexer.html', form=form, tokens=tokens)
      
     return render_template('lexer.html', form=form, tokens=None)
+
 
 
 @app.route('/tree', methods=['GET', 'POST'])
