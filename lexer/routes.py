@@ -1,6 +1,7 @@
 from lexer import app
 from flask import render_template
 from .forms import CodeForm, TreeForm
+from .scripts.lexical import tokenize_cpp_code
 
 @app.route('/')
 @app.route('/index')
@@ -15,11 +16,12 @@ def team():
 @app.route('/lexer', methods=['GET', 'POST'])
 def lexer():
     form = CodeForm()
-    #if form.validate_on_submit():
-        #code = form.Code.data
-        # Function Call For Lexical and Syntax Analyzer
+    if form.validate_on_submit():
+        code = form.code.data
+        tokens = tokenize_cpp_code(code)
+        return render_template('lexer.html', form=form, tokens=tokens)
      
-    return render_template('lexer.html', form=form)
+    return render_template('lexer.html', form=form, tokens=None)
 
 
 @app.route('/tree', methods=['GET', 'POST'])

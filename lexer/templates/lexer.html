@@ -33,4 +33,18 @@
     </div>
 </div>
 
+{% if tokens %}
+<h2>Tokens:</h2>
+<ul>
+{% for token in tokens %}
+    <li>{{ token[0] }}: {{ token[1] }}</li>
+{% endfor %}
+</ul>
+{% endif %}
+
+{% if result %}
+<h2>Result:</h2>
+<p>{{ result }}</p>
+{% endif %}
+
 {%endblock%}
