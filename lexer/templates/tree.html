@@ -18,21 +18,42 @@
         </div>
     </div>
     <div class="row justify-content-center align-items-center align-self-center">
+
         <form method="POST" action="{{ url_for('tree') }}">
             {{ form.hidden_tag() }}
             <div class="col-md-12 text-center justify-content-center align-items-center align-content-center align-self-center">
-                {{ form.expression(class_="form-control", style="margin-left: 420px; margin-top: -1px;width: 456.8px;height: 48px;") }}
+                {{ form.expression(class_="form-control", style="margin-left: 420px; margin-top: -1px; width: 456.8px; height: 48px;") }}
             </div>
-            <div class="col" style="margin-bottom: 97px; text-align: center; padding-bottom: 42px;padding-top: 20px;margin-top: -3px;">
-                {{ form.submit(class_="btn btn-primary", style="padding-top: 0px;width: 100.05px;height: 41px;") }}
+            <div class="col" style="margin-bottom: 97px; text-align: center; padding-bottom: 42px; padding-top: 20px; margin-top: -3px;">
+                {{ form.submit(class_="btn btn-primary", style="padding-top: 0px; width: 100.05px; height: 41px;") }}
             </div>
         </form>
+
+        {% if expression %}
+        <h2>Expression: {{ expression }}</h2>
+
+        {% if tree %}
+            <h2>Expression Tree:</h2>
+            <pre>{{ display_tree(tree) }}</pre>
+        {% endif %}
+    {% endif %}
     </div>
 </div>
 <div class="container">
     <div class="row">
+       
         <div class="col-md-12" style="width: 1364px;height: 390px;"></div>
     </div>
 </div>
 
 {%endblock%}
+
+{% macro display_tree(node, indent='') %}
+    {% if node is none %}
+        {{ indent }}(empty)
+    {% else %}
+        {{ indent }}{{ node.value }}
+        {{ display_tree(node.left, indent ~ '    ') }}
+        {{ display_tree(node.right, indent ~ '    ') }}
+    {% endif %}
+{% endmacro %}

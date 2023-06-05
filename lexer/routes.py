@@ -2,6 +2,7 @@ from lexer import app
 from flask import render_template
 from .forms import CodeForm, TreeForm
 from .scripts.lexical import tokenize
+from .scripts.tree import build_expression_tree
 
 @app.route('/')
 @app.route('/index')
@@ -28,8 +29,9 @@ def lexer():
 @app.route('/tree', methods=['GET', 'POST'])
 def tree():
     form = TreeForm()
-    #if form.validate_on_submit():
-        #code = form.Code.data
-        # Function Call For Lexical and Syntax Analyzer
-        
-    return render_template('tree.html', form=form)
+    if form.validate_on_submit():
+        expression=form.expression.data
+        tree = build_expression_tree(expression)
+        return render_template('tree.html', form=form, tree=tree, expression=expression)
+    
+    return render_template('tree.html', form=form, tree=None, expression=None)
