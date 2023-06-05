@@ -1,104 +1,105 @@
 import re
 
-# Regular expressions for token patterns
-token_patterns = [
-    (r'"[^"\\]*(?:\\.[^"\\]*)*"', 'STRING'),  # Strings within double quotes
-    (r'[A-Za-z_][A-Za-z0-9_]*', 'IDENTIFIER'),  # Alphabets and underscore followed by alphanumeric characters
-    (r'\d+', 'NUMBER'),  # Numbers
-    (r'\(', 'LPAREN'),  # Left parenthesis
-    (r'\)', 'RPAREN'),  # Right parenthesis
-    (r'\{', 'LBRACE'),  # Left brace
-    (r'\}', 'RBRACE'),  # Right brace
-    (r'\[', 'LBRACKET'),  # Left bracket
-    (r'\]', 'RBRACKET'),  # Right bracket
-    (r'\+', 'PLUS'),  # Plus operator
-    (r'-', 'MINUS'),  # Minus operator
-    (r'\*', 'MULTIPLY'),  # Multiply operator
-    (r'/', 'DIVIDE'),  # Divide operator
-    (r'%', 'MODULUS'),  # Modulus operator
-    (r'=', 'ASSIGN'),  # Assignment operator
-    (r'==', 'EQUAL'),  # Equal to operator
-    (r'\|\|', 'OR'),  # Logical OR operator
-    (r'&&', 'AND'),  # Logical AND operator
-    (r'<<', 'LEFT_SHIFT'),  # Left shift operator
-    (r'>>', 'RIGHT_SHIFT'),  # Right shift operator
-    (r'<', 'LESS_THAN'),  # Less than operator
-    (r'>', 'GREATER_THAN'),  # Greater than operator
-    (r'#', 'HASH'),  # Hash
-    (r'\.', 'DOT'),  # Dot
-    (r'\+\+', 'INCREMENT'),  # Increment operator
-    (r'--', 'DECREMENT'),  # Decrement operator
-    (r';', 'SEMICOLON'),  # Semicolon
+# Regular expression patterns for tokens
+patterns = [
+    #('RESERVED', r'')
+    ('IDENTIFIER', r'[a-zA-Z_][a-zA-Z0-9_]*'),  # Alphabets and underscore followed by alphanumeric characters
+    ('NUMBER', r'\d+'),  # Numbers
+    ('STRING', r'\"([^\\\n]|(\\.))*?\"'),  # Strings within double quotes
+    ('PLUS', r'\+'),  # Plus operator
+    ('MINUS', r'-'),  # Minus operator
+    ('MULTIPLY', r'\*'),  # Multiply operator
+    ('DIVIDE', r'/'),  # Divide operator
+    ('MODULUS', r'%'),  # Modulus operator
+    ('EQUALS', r'='),  # Equal to operator
+    ('SEMICOLON', r';'),  # Semicolon
+    ('COLON', r':'),  # Colon
+    ('LPAREN', r'\('),  # Left parenthesis
+    ('RPAREN', r'\)'),  # Right parenthesis
+    ('LBRACE', r'{'),  # Left brace
+    ('RBRACE', r'}'),  # Right brace
+    ('LBRACKET', r'\['),  # Left bracket
+    ( 'RBRACKET', r'\]'),  # Right bracket
+    ('ASSIGN', r'='),  # Assignment operator
+    ('OR', r'\|\|'),  # Logical OR operator
+    ('AND', r'&&'),  # Logical AND operator
+    ('LEFT_SHIFT', r'<<'),  # Left shift operator
+    ('RIGHT_SHIFT', r'>>'),  # Right shift operator
+    ('LESS_THAN', r'<'),  # Less than operator
+    ('GREATER_THAN', r'>'),  # Greater than operator
+    ('HASH', r'#'),  # Hash
+    ('DOT', r'\.'),  # Dot
+    ('INCREMENT', r'\+\+'),  # Increment operator
+    ('DECREMENT', r'--'),  # Decrement operator
 ]
 
-# Regular expression for strings within double quotes
-string_pattern = r'"[^"\\]*(?:\\.[^"\\]*)*"'
+# List of reserved words in C++
+reserved_words = [
+    'alignas', 'alignof', 'and', 'and_eq', 'asm', 'atomic_cancel', 'atomic_commit', 'atomic_noexcept',
+    'auto', 'bitand', 'bitor', 'bool', 'break', 'case', 'catch', 'char', 'char8_t', 'char16_t', 'char32_t',
+    'class', 'compl', 'concept', 'const', 'consteval', 'constexpr', 'constinit', 'const_cast', 'continue',
+    'co_await', 'co_return', 'co_yield', 'decltype', 'default', 'delete', 'do', 'double', 'dynamic_cast',
+    'else', 'enum', 'explicit', 'export', 'extern', 'false', 'float', 'for', 'friend', 'goto', 'iostream', 'if', 
+    'include', 'inline', 'int', 'long', 'mutable', 'namespace', 'new', 'noexcept', 'not', 'not_eq', 'nullptr', 
+    'operator', 'or', 'or_eq', 'private', 'protected', 'public', 'reflexpr', 'register', 'reinterpret_cast', 
+    'requires', 'return', 'short', 'signed', 'sizeof', 'static', 'static_assert', 'static_cast', 'std', 'struct', 
+    'switch', 'synchronized', 'template', 'this', 'thread_local', 'throw', 'true', 'try', 'typedef', 'typeid', 
+    'typename', 'union', 'unsigned', 'using', 'virtual', 'void', 'volatile', 'wchar_t', 'while', 'xor', 'xor_eq'
+]
 
-# Regular expression for single-line comments
-single_line_comment_pattern = r'//.*'
-
-# Regular expression for multi-line comments
-multi_line_comment_pattern = r'/\*[\s\S]*?\*/'
-
-
-def tokenize_cpp_code(code):
-    # Remove spaces, newlines, and tabs
-    code = re.sub(r'\s+', '', code)
-
-    # Remove single-line comments
-    code = re.sub(single_line_comment_pattern, '', code)
-
-    # Remove multi-line comments
-    code = re.sub(multi_line_comment_pattern, '', code)
-
+# Tokenize the code
+def tokenize(code):
     tokens = []
-    while code:
-        matched = False
-        if code[0] == '"':
-            match = re.match(string_pattern, code)
-            if match:
-                value = match.group()
-                tokens.append(('STRING', value))
-                code = code[len(value):]
-                matched = True
+    position = 0
+    total_length = len(code)
 
-        if not matched:
-            for pattern, token_type in token_patterns:
-                match = re.match(pattern, code)
-                if match and match.start() == 0:
-                    value = match.group()
-                    tokens.append((token_type, value))
-                    code = code[len(value):]
-                    matched = True
+    while position < total_length:
+        match = None
+
+        # Skip spaces, new lines, and tabs
+        if re.match(r'\s', code[position]):
+            position += 1
+            continue
+
+        # Skip single-line comments
+        if code[position:position+2] == '//':
+            position = code.find('\n', position)
+            if position == -1:
+                break
+            continue
+
+        # Skip multi-line comments
+        if code[position:position+2] == '/*':
+            position = code.find('*/', position+2)
+            if position == -1:
+                break
+            position += 2
+            continue
+
+        # Match reserved words
+        for reserved_word in reserved_words:
+            regex = re.compile(r'\b' + re.escape(reserved_word) + r'\b')
+            match = regex.match(code, position)
+            if match:
+                value = match.group(0)
+                token = ('KEYWORD', value)
+                tokens.append(token)
+                position = match.end()
+                break
+
+        if not match:
+            for token_name, pattern in patterns:
+                regex = re.compile(pattern)
+                match = regex.match(code, position)
+                if match:
+                    value = match.group(0)
+                    token = (token_name, value)
+                    tokens.append(token)
+                    position = match.end()
                     break
 
-        if not matched:
-            tokens.append(('INVALID', code[0]))
-            code = code[1:]
+        if not match:
+            print("Illegal character '%s'" % code[position])
+            position += 1
 
     return tokens
-
-
-# Example usage
-cpp_code = '''
-#include <iostream>
-using namespace std;
-
-int main() {
-    int x = 10;
-    bool flag = true;
-    if (flag) {
-        cout << "Hello, World!" << endl;
-    }
-    // This is a single-line comment
-    /*
-    This is a
-    multi-line comment
-    */
-    return 0;
-}
-'''
-
-tokens = tokenize_cpp_code(cpp_code)
-for token_type, value in tokens:
-    print(f'{token_type}: {value}')
