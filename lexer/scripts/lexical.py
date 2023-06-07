@@ -2,10 +2,11 @@ import re
 
 # Regular expression patterns for tokens
 patterns = [
-    #('RESERVED', r'')
     ('IDENTIFIER', r'[a-zA-Z_][a-zA-Z0-9_]*'),  # Alphabets and underscore followed by alphanumeric characters
     ('NUMBER', r'\d+'),  # Numbers
     ('STRING', r'\"([^\\\n]|(\\.))*?\"'),  # Strings within double quotes
+    ('INCREMENT', r'\+\+'),  # Increment operator
+    ('DECREMENT', r'--'),  # Decrement operator
     ('PLUS', r'\+'),  # Plus operator
     ('MINUS', r'-'),  # Minus operator
     ('MULTIPLY', r'\*'),  # Multiply operator
@@ -29,8 +30,6 @@ patterns = [
     ('GREATER_THAN', r'>'),  # Greater than operator
     ('HASH', r'#'),  # Hash
     ('DOT', r'\.'),  # Dot
-    ('INCREMENT', r'\+\+'),  # Increment operator
-    ('DECREMENT', r'--'),  # Decrement operator
 ]
 
 # List of reserved words in C++
@@ -40,7 +39,7 @@ reserved_words = [
     'class', 'compl', 'concept', 'const', 'consteval', 'constexpr', 'constinit', 'const_cast', 'continue',
     'co_await', 'co_return', 'co_yield', 'decltype', 'default', 'delete', 'do', 'double', 'dynamic_cast',
     'else', 'enum', 'explicit', 'export', 'extern', 'false', 'float', 'for', 'friend', 'goto', 'iostream', 'if', 
-    'include', 'inline', 'int', 'long', 'mutable', 'namespace', 'new', 'noexcept', 'not', 'not_eq', 'nullptr', 
+    'include', 'inline', 'int', 'long', 'main', 'mutable', 'namespace', 'new', 'noexcept', 'not', 'not_eq', 'nullptr', 
     'operator', 'or', 'or_eq', 'private', 'protected', 'public', 'reflexpr', 'register', 'reinterpret_cast', 
     'requires', 'return', 'short', 'signed', 'sizeof', 'static', 'static_assert', 'static_cast', 'std', 'struct', 
     'switch', 'synchronized', 'template', 'this', 'thread_local', 'throw', 'true', 'try', 'typedef', 'typeid', 
@@ -82,7 +81,7 @@ def tokenize(code):
             match = regex.match(code, position)
             if match:
                 value = match.group(0)
-                token = ('KEYWORD', value)
+                token = ('Reserved', value)
                 tokens.append(token)
                 position = match.end()
                 break
