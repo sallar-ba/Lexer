@@ -1,0 +1,5 @@
+canvas==2.2.1
+mathjs==11.3.0
+Flask==2.0.1
+requests==2.26.0
+Flask-WTF==1.0.0
