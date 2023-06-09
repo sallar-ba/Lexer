@@ -1,11 +1,9 @@
-i = 0
-current_token = None
-flag = 0
-
-
 def Foo(tokens):
+    i = 0
+    current_token = None
+    flag = 0
     def getToken_Huzaifa():
-        global flag, current_token, i
+        nonlocal flag, current_token, i
         if not flag:
             if i < len(tokens):
                 current_token = tokens[i]
@@ -18,7 +16,7 @@ def Foo(tokens):
             return current_token
 
     def unGetToken():
-        global flag
+        nonlocal flag
         flag = 1
 
     def While_Huzaifa():
