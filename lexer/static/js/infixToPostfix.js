@@ -22,7 +22,7 @@ function isBracketed(expr) {
       return false;
     }
     for (var i = 0; i < expr.length; i++) {
-      if ('abcdefghijklmnopqrstuvwxyz*()/+-'.indexOf(expr[i]) === -1) {
+      if ('abcdefghijklmnopqrstuvwxyz1234567890*()/+-'.indexOf(expr[i]) === -1) {
         return false;
       }
     }
@@ -43,6 +43,7 @@ function isBracketed(expr) {
     }
   }
   
+  
   function infixToPostfix(expression) {
     if (!isValidExpression(expression)) {
       return null;
@@ -52,7 +53,7 @@ function isBracketed(expr) {
     postfixList = []
     tokens = expression.split('')
     for (const token of tokens) {
-      if ("abcdefghijklmnopqrstuvwxyz".indexOf(token) !== -1) {
+      if ("abcdefghijklmnopqrstuvwxyz1234567890".indexOf(token) !== -1) {
         postfixList.push(token)
       } else if ("(" === token) {
         op_stack.push(token)
