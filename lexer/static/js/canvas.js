@@ -1,76 +1,78 @@
-function getSize(root) {
-    if (root === null) return 0;
-    else
-      return (
-        getSize(root.left) + 1 + getSize(root.right)
-      );
-  }
-  
-  function setCoordinates(root, height, width, margin_x, margin_y) {
-    if (root === null) return;
-    setCoordinates(
-      root.left,
-      height - margin_y,
-      width / 2,
-      margin_x / 2,
-      margin_y
-    );
-    root.x = width;
-    root.y = height;
-    setCoordinates(
-      root.right,
-      height - margin_y,
-      width + margin_x,
-      margin_x / 2,
-      margin_y
-    );
-  }
-  
-  function print_coords(root) {
-    if (root === null) return;
-    console.log(root.x + ", " + root.y);
-    print_coords(root.left);
-    print_coords(root.right);
-  }
-  
-  function drawTree(root, canvasId) {
-    const canvas = document.getElementById(canvasId);
-    const context = canvas.getContext("2d");
-  
-    const canvasWidth = canvas.width;
-    const canvasHeight = canvas.height;
-  
-    const marginX = canvasWidth / (getSize(root) + 1);
-    const marginY = canvasHeight / (Math.floor(canvasHeight / 150) + 1);
-  
-    setCoordinates(root, canvasHeight, marginX, marginX, marginY);
-  
-    // Clear canvas
-    context.clearRect(0, 0, canvasWidth, canvasHeight);
-  
-    // Draw edges
-    function drawEdges(node) {
-      if (node === null) return;
-      if (node.left) {
-        node.drawEdge(context, node.left.x, node.left.y, true, () =>
-          drawEdges(node.left)
-        );
-      }
-      if (node.right) {
-        node.drawEdge(context, node.right.x, node.right.y, false, () =>
-          drawEdges(node.right)
-        );
-      }
-    }
-    drawEdges(root);
-  
-    // Draw nodes
-    function drawNodes(node) {
-      if (node === null) return;
-      node.draw(context);
-      drawNodes(node.left);
-      drawNodes(node.right);
-    }
-    drawNodes(root);
-  }
-  
+
+
+(function () {
+    const SAMPLE_EXPRESSIONS = [
+        '(a + b)*c - (x - y)/z',
+        '(a * b) - c + z / x',
+        'x - y + (c / (a + b))',
+        '(a / y) + b - (c * x)',
+        '(a - b) * (c + d) / z',
+        '(a * b) - (x / y)'
+    ]
+    var canvas = document.querySelector('canvas')
+    var c = canvas.getContext('2d')
+
+    function clearCanvas() { c.clearRect(0, 0, canvas.width, canvas.height) }
+
+    document.getElementById('generate-tree').addEventListener('click', () => {
+
+        var expression = document.getElementById('expression-input').value
+
+        if (typeof expression !== 'undefined' && null != expression) {
+
+            expression = expression.replace(/\s+/g, '')
+            expression = expression.toLowerCase()
+            var postfix = infixToPostfix(expression);
+
+            if (null !== postfix) {
+                try {
+                    var root = constructTree(postfix)
+                    setCoordinates(root)
+                    clearCanvas()
+
+                    canvas.height = document.getElementById('canvas-container').offsetHeight;
+                    canvas.width = document.getElementById('canvas-container').offsetWidth;
+
+                    drawTree(root, c)
+                } catch (e) {
+                    displayErrorMessage()
+                }
+            } else {
+                displayErrorMessage()
+            }
+
+        } else {
+            displayErrorMessage()
+        }
+    })
+
+    document.getElementById('clear-tree').addEventListener('click', () => {
+        document.getElementById('expression-input').value = ''
+        clearCanvas()
+    })
+
+    document.getElementById('expression-input').value = SAMPLE_EXPRESSIONS[Math.floor(Math.random() * SAMPLE_EXPRESSIONS.length)]
+    setTimeout(() => {
+        document.getElementById('generate-tree').click()
+    }, 500)
+})();
+
+
+
+function displayErrorMessage() {
+    Swal.fire({
+        icon: 'error',
+        title: 'Invalid expression',
+        html: `
+            <div style="font-size:1.1em;text-align: left;margin:0px 0px 0px 60px;">
+                - You may only use these brackets ( ). <br/>
+                - Use * for multiplication and / for division. <br/>
+                - Valid operators and operands are:<br/>
+                <div style="margin-left: 10px;">
+                    <i>Operators</i>: <b>[+ - * / ]</b><br/>
+                    <i>Operands</i>: Any alphabetic letter.
+                </div>
+            </div>
+        `
+    })
+}
