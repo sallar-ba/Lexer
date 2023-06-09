@@ -1,8 +1,8 @@
 from lexer import app
 from flask import render_template
-from .forms import CodeForm, TreeForm
+from .forms import CodeForm
 from .scripts.lexical import tokenize
-from .scripts.tree import build_expression_tree
+from .scripts.syntax import foo1
 
 @app.route('/')
 @app.route('/index')
@@ -14,24 +14,26 @@ def index():
 def team():
     return render_template('team.html')
 
+
+
 @app.route('/lexer', methods=['GET', 'POST'])
 def lexer():
     form = CodeForm()
     if form.validate_on_submit():
         code = form.code.data
         tokens = tokenize(code)
-        return render_template('output_lexer.html', form=form, tokens=tokens)
+        isValid = foo1(tokens)
+        return render_template('output_lexer.html', form=form, tokens=tokens, isValid=isValid)
      
-    return render_template('lexer.html', form=form, tokens=None)
+    return render_template('lexer.html', form=form, tokens=None, isValid=None)
 
 
 
 @app.route('/tree', methods=['GET', 'POST'])
 def tree():
-    form = TreeForm()
-    if form.validate_on_submit():
-        expression=form.expression.data
-        tree = build_expression_tree(expression)
-        return render_template('tree.html', form=form, tree=tree, expression=expression)
+    # form = TreeForm()
+    # if form.validate_on_submit():
+    #     expression=form.expression.data
+    return render_template('tree.html')
     
-    return render_template('tree.html', form=form, tree=None, expression=None)
+    # return render_template('tree.html', form=form, expression=None)

@@ -7,6 +7,6 @@ class CodeForm(FlaskForm):
     submit = SubmitField('Submit', render_kw={"class": "btn btn-primary"})
 
 
-class TreeForm(FlaskForm):
-    expression = StringField('Expression', validators=[InputRequired()], render_kw={"placeholder": "Enter Expression..."})
-    submit = SubmitField('Generate', render_kw={"class": "btn btn-primary"})
+# class TreeForm(FlaskForm):
+#     expression = StringField('Expression', validators=[InputRequired()], render_kw={"placeholder": "Enter Expression..."})
+#     submit = SubmitField('Generate', render_kw={"class": "btn btn-primary"})
