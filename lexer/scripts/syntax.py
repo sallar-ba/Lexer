@@ -109,7 +109,7 @@ def Foo(tokens):
         if not F_Huzaifa():
             return False
         Huzaifa_Token = getToken_Huzaifa()
-        if Huzaifa_Token[0] in ['LESS_THAN_EQUAL', 'EQUAL_TO', 'GREATER_THAN_EQUAL', 'NOT_EQUAL']:
+        if Huzaifa_Token[0] in ['LESS_THAN_EQUAL', 'EQUAL_TO', 'GREATER_THAN_EQUAL', 'NOT_EQUAL','GREATER_THAN','LESS_THAN']:
             if F_Huzaifa():
                 return True
         unGetToken()  # Add this line to "unget" the token if comparison fails
