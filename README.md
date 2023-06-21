@@ -4,7 +4,8 @@
 LEXER is a Flask-based web application that performs lexical analysis, syntax analysis for the C++ programming language, and expression tree generation. It helps programmers analyze and understand their C++ code by generating tokens, validating syntax, and visualizing the structure of the code through an expression tree.
 
 
-
+## Demo
+You can try out LEXER by visiting the live demo at https://lexer-87uy.onrender.com/.
 
 ## Features
 
