@@ -15,7 +15,7 @@ You can try out LEXER by visiting the live demo at https://lexer-87uy.onrender.c
 - ***Expression tree generation***: Creates an expression tree to visualize the code structure.
 - ***User-friendly interface***: A simple and intuitive web interface for interacting with the compiler.
 
-## Installation
+## Installation (For Devs)
 
 To run LEXER locally, follow these steps:
 
